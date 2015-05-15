@@ -1,4 +1,5 @@
-# learnLX
+![learnLX](http://varninja.com/images/learnLXwsm.png)
+
 An open-source language-learning platform.
 Created by Kyle Permuy (varNinja).
 
