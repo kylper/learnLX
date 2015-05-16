@@ -17,7 +17,7 @@ mongoose.connect('mongodb://localhost');
 var dbc = mongoose.connection;
 dbc.on('error', console.error.bind(console, 'connection error:'));
 dbc.once('open', function (callback) {
-  console.log("Mongoose connected! - for debugging only");
+  console.log("Mongoose connected!");
 });
 
 /* function ensureAuth(req, res, next) {
@@ -46,11 +46,12 @@ if (app.get('env') === 'production') {
 }
 
 app.use(session(sess));
-
-app.use('/', indexRoute);
 app.use('/success', checkRoute);
 app.use('/users', usersRoute);
 app.use('/content', contentRoute);
+app.get('/', function(req, res, next) {
+  res.sendFile('./html/index.html');
+});
 
 app.post('/login',
   passport.authenticate('local'),
