@@ -7,4 +7,6 @@ var phraseSchema = new Schema({
   content: [String]
 });
 
-module.exports = mongoose.model('Phrase', phraseSchema);
+var Phrase = mongoose.model('Phrase', phraseSchema);
+
+module.exports = Phrase;

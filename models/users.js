@@ -7,4 +7,6 @@ var userSchema = new Schema({
   password: String /* this is a sick joke, don't worry */
 });
 
-module.exports = mongoose.model('User', userSchema);
+var User = mongoose.model('User', userSchema);
+
+module.exports = User;

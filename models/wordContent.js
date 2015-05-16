@@ -10,4 +10,10 @@ var wordSchema = new Schema({
   videoLocation: String
 });
 
-module.exports = mongoose.model('Word', wordSchema);
+var Word = mongoose.model('Word', wordSchema);
+
+/* Word.schema.path('color').validate(function (value) {
+  return /blue|green|white|red|orange|periwinkle/i.test(value);
+}, 'Invalid color'); -- THIS IS FOR VALIDATION -- */
+
+module.exports = Word;

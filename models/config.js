@@ -12,4 +12,6 @@ var configSchema = new Schema({
   website: String
 });
 
-module.exports = mongoose.model('Config', configSchema);
+var Config = mongoose.model('Config', configSchema);
+
+module.exports = Config;

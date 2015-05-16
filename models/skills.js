@@ -7,4 +7,6 @@ var skillSchema = new Schema({
   phrases: [String]
 });
 
-module.exports = mongoose.model('Skill', skillSchema);
+var Skill = mongoose.model('Skill', skillSchema);
+
+module.exports = Skill;
