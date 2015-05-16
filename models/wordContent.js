@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 var ObjectId = Schema.ObjectId;
 
 var wordSchema = new Schema({
-  id: ObjectId,
+  id: Number,
   content: String,
   pictureLocation: String,
   audioLocation: String,

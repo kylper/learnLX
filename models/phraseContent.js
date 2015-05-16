@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 var ObjectId = Schema.ObjectId;
 
 var phraseSchema = new Schema({
-  id: ObjectId,
+  id: Number,
   content: [String]
 });
 
