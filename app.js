@@ -32,12 +32,12 @@ var checkRoute = require('./routes/check');
 var usersRoute = require('./routes/users');
 var contentRoute = require('./routes/content');
 
-app.use('/success', checkRoute);
+app.use('/check', checkRoute);
 app.use('/users', usersRoute);
 app.use('/content', contentRoute);
 app.use('/', indexRoute);
 
-// ======== Error Handling :( =====================
+// ======== Error Handling  ==============
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -63,7 +63,7 @@ app.use(function(err, req, res, next) {
     res.json({ message: err.message });
 });
 
-// ======== App Start! =====================
+// ======== App Start! ===================
 app.listen(port);
 console.log('Magic happens at http://localhost:' + port);
 

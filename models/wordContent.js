@@ -4,10 +4,11 @@ var ObjectId = Schema.ObjectId;
 
 var wordSchema = new Schema({
   id: Number,
-  content: String,
-  pictureLocation: String,
-  audioLocation: String,
-  videoLocation: String
+  native: String,
+  translation: String,
+  image: { type: String, lowercase: true },
+  audio: { type: String, lowercase: true },
+  video: { type: String, lowercase: true }
 });
 
 var Word = mongoose.model('Word', wordSchema);
