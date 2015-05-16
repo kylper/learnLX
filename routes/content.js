@@ -1,8 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
-var Word = require('./models/wordContent');
-var Phrase = require('./models/phraseContent');
+var Word = require('../models/wordContent');
+var Phrase = require('../models/phraseContent');
 
 /*
 - IF POSTing phrases, replace all matched words with their ID number
@@ -11,10 +11,15 @@ var Phrase = require('./models/phraseContent');
 
 // Level 1 - User, Level 2 - Moderator, Level 3 - Administrator
 
+router.get('/', function(req, res, next){
+  res.status(404);
+  res.json({ message: 'Please specify the content you want to see.' });
+});
+
 /* Words */
 router.get('/words/:id', function(req, res, next) {
-  Word.findById(req.params.id, function(err, theWord){
-    if (err){ return res.send(err); }
+  Word.findOne({ id: req.params.id }, function(err, theWord){
+    if (err) return res.send(err);
     res.json(theWord);
   });
 });
@@ -28,6 +33,8 @@ router.get('/words', function(req, res, next) {
 
 // Requires authentication
 router.post('/words/bulkadd', function(req, res, next) {
+  res.status(501);
+  res.json({ message: 'Function under development.' });
   // Checks proper authentication of level 3
   // uploads a Comma Separated Value(csv), XML, or JSON document
   // converts all content to JSON objects
@@ -38,6 +45,8 @@ router.post('/words/bulkadd', function(req, res, next) {
 
 // Requires authentication
 router.post('/words', function(req, res, next) {
+  res.status(501);
+  res.json({ message: 'Function under development.' });
   // Checks proper authentication of level 2
   // Generate a new contentID
   // Verify content of JSON post matches mongoose schema
@@ -47,6 +56,8 @@ router.post('/words', function(req, res, next) {
 
 // Requires authentication
 router.put('/words/:id', function(req, res, next) {
+  res.status(501);
+  res.json({ message: 'Function under development.' });
   // Checks proper authentication of level 2
   // Checks content to see what is being updated (audio field, video field, content field, etc.)
   // Verifies validity to match schema
@@ -56,6 +67,8 @@ router.put('/words/:id', function(req, res, next) {
 
 // Requires authentication
 router.delete('/words/:id', function(req, res, next) {
+  res.status(501);
+  res.json({ message: 'Function under development.' });
   // Checks proper authentication of level 3
   // Removes word entry matching that id
 });
@@ -63,16 +76,22 @@ router.delete('/words/:id', function(req, res, next) {
 
 /* Phrases */
 router.get('/phrases/:id', function(req, res, next) {
+  res.status(501);
+  res.json({ message: 'Function under development.' });
   // Render JSON with content of specific phrase
   // Renders words with corresponding ids and shows popups with appropriate photo or accompanying audio
 });
 
 router.get('/phrases', function(req, res, next) {
+  res.status(501);
+  res.json({ message: 'Function under development.' });
   // Render JSON full list of phrases and matching IDs
 });
 
 // Requires authentication
 router.post('/phrases/bulkadd', function(req, res, next) {
+  res.status(501);
+  res.json({ message: 'Function under development.' });
   // Checks proper authentication of level 3
   // uploads a Comma Separated Value(csv), XML, or JSON document
   // converts all content to JSON objects
@@ -83,6 +102,8 @@ router.post('/phrases/bulkadd', function(req, res, next) {
 
 // Requires authentication
 router.post('/phrases', function(req, res, next) {
+  res.status(501);
+  res.json({ message: 'Function under development.' });
   // Checks proper authentication of level 2
   // Generate a new contentID
   // Verify content of JSON post matches mongoose schema
