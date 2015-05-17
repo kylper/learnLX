@@ -20,7 +20,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static('html'));
 
 mongoose.connection.on('error', console.error.bind(console, 'Connection Error with Mongoose. '));
-mongoose.connection.once('open', function(callback){ console.log("Successful Connection with Mongoose!"); });
+mongoose.connection.once('open', function(callback) {
+  console.log("Successful Connection with Mongoose!");
+});
 
 // ======== DB Models ===================
 var Word = require('./models/wordContent');
@@ -34,7 +36,7 @@ var usersRoute = require('./routes/users');
 var contentRoute = require('./routes/content');
 var authRoute = require('./routes/authentication');
 
-if (config.api){
+if (config.apiURL){
   app.use('/api/check', checkRoute);
   app.use('/api/users', usersRoute);
   app.use('/api/content', contentRoute);
