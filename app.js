@@ -26,6 +26,11 @@ app.use(passport.session());
 mongoose.connection.on('error', console.error.bind(console, 'Connection Error with Mongoose: '));
 mongoose.connection.once('open', function(callback){ console.log("Successful Connection with Mongoose!"); });
 
+// ======== Models ======================
+var Word = require('./models/wordContent');
+var Phrase = require('./models/phraseContent');
+
+
 // ======== Routes! =====================
 var indexRoute = require('./routes/index');
 var checkRoute = require('./routes/check');

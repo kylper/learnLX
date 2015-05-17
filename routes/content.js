@@ -1,8 +1,8 @@
 var express = require('express');
+var mongoose = require('mongoose');
 var router = express.Router();
-
-var Word = require('../models/wordContent');
-var Phrase = require('../models/phraseContent');
+var word = require('../models/wordContent');
+var phrase = mongoose.model('Phrase');
 
 /*
 - IF POSTing phrases, replace all matched words with their ID number
@@ -18,13 +18,13 @@ router.get('/', function(req, res, next){
 
 /* Words */
 router.get('/words/:id', function(req, res, next) {
-  Word.findOne({ id: req.params.id }, function(err, theWord){
-    if (!err){
-      res.status(200);
-      return res.json(theWord);
-    } else if (theWord == ""){
+  word.findOne({ id: req.params.id }, function(err, theWord){
+    if (theWord == null){
       res.status(404);
       res.json ({ "message": "The word could not be found." });
+    } else if (!err){
+      res.status(200);
+      return res.json(theWord);
     } else {
       res.status(500);
       res.json ({ "message": err });
@@ -40,7 +40,7 @@ router.get('/words/:id', function(req, res, next) {
 }); */
 
 // Requires authentication
-router.post('/words/bulkadd', function(req, res, next) {
+router.post('/words/importlib', function(req, res, next) {
   res.status(501);
   res.json({ message: "Function under development." });
   // Checks proper authentication of level 3
@@ -54,35 +54,43 @@ router.post('/words/bulkadd', function(req, res, next) {
 // Requires authentication
 router.post('/words', function(req, res, next) {
   var pd = req.body; // Posted Data
-  var response = {};
-  var newWordContent = {};
+  var newWordContent;
   var id = 1;
 
-  Word.count({}, function(err, count){
+  word.count({}, function(err, count){
     id = count+1;
-    console.log( "Current Count of Words in DB: ", count+1 );
+    console.log( "Current Count of Words in DB: ", count );
+
+    newWordContent = {
+      "id" : id,
+      "native": pd.native,
+      "translation": pd.translation,
+      "image": pd.image,
+      "audio": pd.audio,
+      "video": pd.video
+    }
+
+    if (!pd.native || !pd.translation){
+      res.status(400);
+      res.json({ "message": "Required field is missing." });
+    } else if (err) {
+      res.status(500);
+      res.json({ "message": "An error occurred during word lookup." });
+      console.log ("Error 500 occurred during word.count");
+    } else {
+      word.create (newWordContent, function(err, wordFinal) {
+        if (err) {
+          res.status(500);
+          res.json({ "message": "An error occurred while saving new word." });
+          console.log("Error 500 occured while creating word ", pd.native);
+        } else {
+          res.status(201);
+          res.json({ "message": "Success, "+ wordFinal.native +" has been added.", "id": wordFinal.id });
+          console.log( "Success: "+ wordFinal.native +" saved. New Count of Words in DB: ", id );
+        }
+      });
+    }
   });
-
-  newWordContent = {
-    "id" : id,
-    "native": pd.native,
-    "translation": pd.translation,
-    "pictureLocation": pd.pictureLocation,
-    "audioLocation": pd.audioLocation,
-    "videoLocation": pd.videoLocation
-  }
-
-  if (!pd.native || !pd.translation){
-    res.status(400);
-    newWordContent = null;
-    response = { "message": "Required field is missing.", "status": 400 };
-  } else {
-    var addition = new Word(newWordContent);
-    response = { "message": "Success, "+ pd.native +" has been added to ID number: "+ id +".", "status": 201 };
-  }
-
-  res.status(response.status);
-  res.json({ "message": response.message });
 });
 
 // Requires authentication
@@ -98,10 +106,13 @@ router.put('/words/:id', function(req, res, next) {
 
 // Requires authentication
 router.delete("/words/:id", function(req, res, next) {
-  res.status(501);
-  res.json({ message: "Function under development." });
-  // Checks proper authentication of level 3
-  // Removes word entry matching that id
+  console.log("Attempting deletion of word.");
+  word.findOne({ id: req.params.id }).remove(function(err, rmobj){
+    res.status(204);
+    // res.json({ "message": "Word successfully deleted!" });
+    console.log(rmobj);
+  });
+
 });
 
 
