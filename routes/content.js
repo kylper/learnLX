@@ -18,7 +18,7 @@ router.get('/', function(req, res, next){
 
 /* Words */
 router.get('/words/:id', function(req, res, next) {
-  word.findOne({ id: req.params.id }, function(err, theWord){
+  word.findOne({ _id: req.params.id }, function(err, theWord){
     if (theWord == null){
       res.status(404);
       res.json ({ "message": "The word could not be found." });
@@ -32,12 +32,17 @@ router.get('/words/:id', function(req, res, next) {
   });
 });
 
-/* router.get('/words', function(req, res, next) {
-  Word.findById(req.params.id, function(err, theWord){
-    if (err){ return res.send(err); }
-    res.json(theWord);
+router.get('/words', function(req, res, next) {
+  word.find({}, function(err, objects) {
+    var objMap = {};
+
+    objects.forEach(function(word) {
+      objMap[word._id] = word.native;
+    });
+
+    res.send(objMap);
   });
-}); */
+});
 
 // Requires authentication
 router.post('/words/importlib', function(req, res, next) {
@@ -55,14 +60,11 @@ router.post('/words/importlib', function(req, res, next) {
 router.post('/words', function(req, res, next) {
   var pd = req.body; // Posted Data
   var newWordContent;
-  var id = 1;
 
   word.count({}, function(err, count){
-    id = count+1;
     console.log( "Current Count of Words in DB: ", count );
 
     newWordContent = {
-      "id" : id,
       "native": pd.native,
       "translation": pd.translation,
       "image": pd.image,
@@ -85,8 +87,8 @@ router.post('/words', function(req, res, next) {
           console.log("Error 500 occured while creating word ", pd.native);
         } else {
           res.status(201);
-          res.json({ "message": "Success, "+ wordFinal.native +" has been added.", "id": wordFinal.id });
-          console.log( "Success: "+ wordFinal.native +" saved. New Count of Words in DB: ", id );
+          res.json({ "message": "Success, "+ wordFinal.native +" has been added.", "id": wordFinal._id });
+          console.log( "Success: "+ wordFinal.native +" saved. New Count of Words in DB: ", count+1 );
         }
       });
     }
@@ -105,11 +107,13 @@ router.put('/words/:id', function(req, res, next) {
 });
 
 // Requires authentication
-router.delete("/words/:id", function(req, res, next) {
+router.delete("/words", function(req, res, next) {
   console.log("Attempting deletion of word.");
-  word.findOne({ id: req.params.id }).remove(function(err, rmobj){
+  var deleteID = req.body.id;
+
+  word.findOne({ id: deleteID }).remove(function(err, rmobj){
     res.status(204);
-    // res.json({ "message": "Word successfully deleted!" });
+    res.json({ "message": "Word successfully deleted!" });
     console.log(rmobj);
   });
 

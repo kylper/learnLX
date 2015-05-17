@@ -2,8 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var phraseSchema = new Schema({
-  id: Number,
-  content: [String],
+  native: [String],
   translation: String,
   image: { type: String, lowercase: true },
   audio: { type: String, lowercase: true },

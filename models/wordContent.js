@@ -2,7 +2,6 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var wordSchema = new Schema({
-  id: Number,
   native: String,
   translation: String,
   image: { type: String },
