@@ -1,9 +1,10 @@
 var express = require('express');
 var passport = require('passport');
+var jwt = require('jsonwebtoken');
 var fcts = require('../routes/functions');
 var router = express.Router();
 
-// ======== Other Pages ================
+// ======== Auth Pages =================
 
 router.post('/login',
   passport.authenticate('local'),
@@ -12,6 +13,26 @@ router.post('/login',
     // `req.user` contains the authenticated user.
   res.redirect('/users/' + req.user.username);
 });
+
+router.post('/login', passport.authenticate('local', { session: false }), function(req, res) {
+  var token = jwt.sign(user, app.get('appSecret'), {
+    expiresInMinutes: 720 // expires in 12 hours
+  });
+
+  // return the information including token as JSON
+  res.json({
+    success: true,
+    message: 'Use this token to authenticate. It will expire when revoked (logging out) or in 12 hours.',
+    token: token
+  });
+});
+
+
+
+
+
+
+
 
 router.post('/register',
   passport.authenticate('local'),
@@ -24,6 +45,8 @@ router.post('/register',
 router.get('/', function(req, res, next) {
   res.sendFile('./html/index.html');
 });
+
+// ======== Other Pages ================
 
 router.get('/brew/:index', function(req, res, next) {
   if (fcts.toCap(req.params.index) === "Tea"){

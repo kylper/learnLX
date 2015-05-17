@@ -1,14 +1,10 @@
-var configuration = {
+module.exports = {
   'title': '',
   'description': '',
-  'admins': [],
-  'moderators': [],
   'languagecode': '',
-  'website': '',
+  'basesite': 'api.learnlx.com',
   'logging': 'dev', // default: combined, others: common, dev
   'port': '3000',
   'secret': 'learnLX',
-  'database': 'mongodb://localhost/testDB' 
+  'database': 'mongodb://localhost/testDB'
 }
-
-module.exports = configuration;

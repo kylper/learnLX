@@ -26,11 +26,11 @@ The latest dependencies need to be downloaded for learnLX to run properly.
 
 There is a script you need to run to set everything up for the first time.
 
-    node bin/first
+    [coming soon]
 
 Afterward, to run learnLX, just open the program with this:
 
-    node bin/run
+    node app.js
 
 ## Editing your Language
 After setting up learnLX, you can start the process of adding and editing your language. To access the editing interface, just go to the web interface or the CLI.
@@ -38,11 +38,11 @@ After setting up learnLX, you can start the process of adding and editing your l
 **More info on the Web Interface and CLI is coming soon.**
 
 ## Using learnLX
-As a user, you can access learnLX two centralized ways. We offer a web interface and mobile applications that you can use to log on to any learnLX server.
+As a user, you can access learnLX two centralized ways: web interface and mobile applications that you can use to log on to any learnLX server.
 The administrator of the learnLX server you wish to use may also implement their own version of our open-source web interface or apps.
 
 ## License
-learnLX (this), the learnLX web interface and the learnLX official mobile applications are all free software: you can redistribute it and/or modify it under the terms of the GNU General Public License (version 3) as published by the Free Software Foundation.
+learnLX is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License (version 3) as published by the Free Software Foundation.
 
 This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 

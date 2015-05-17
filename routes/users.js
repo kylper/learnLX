@@ -17,12 +17,10 @@ router.get('/:id/:element', function(req, res, next){
 router.get('/:id', function(req, res, next){
   // will output everything about user in the future.
   var output = { username: req.params.id };
-
   if (req.params.id == 0 || !output) {
     res.status(404);
     output = { user: "Not found!" };
   };
-
   res.json(output);
 });
 
@@ -39,12 +37,6 @@ router.get('/', function(req, res, next){
 
 /* PUT user elements - to update a user profile */
 router.put('/:id', function(req, res, next){
-  res.status(501);
-  res.json({ message: 'Function under development.' });
-});
-
-/* POST new user - if successful, require email verify*/
-router.post('/', function(req, res, next){
   res.status(501);
   res.json({ message: 'Function under development.' });
 });
