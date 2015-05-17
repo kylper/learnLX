@@ -34,10 +34,17 @@ var usersRoute = require('./routes/users');
 var contentRoute = require('./routes/content');
 var authRoute = require('./routes/authentication');
 
-app.use('/check', checkRoute);
-app.use('/users', usersRoute);
-app.use('/content', contentRoute);
-app.use('/', indexRoute);
+if (config.api){
+  app.use('/api/check', checkRoute);
+  app.use('/api/users', usersRoute);
+  app.use('/api/content', contentRoute);
+  app.use('/', indexRoute);
+} else {
+  app.use('/check', checkRoute);
+  app.use('/users', usersRoute);
+  app.use('/content', contentRoute);
+  app.use('/', indexRoute);
+}
 
 // ======== Authentication ===============
 passport.use(new LocalStrategy(User.authenticate()));
