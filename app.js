@@ -25,26 +25,28 @@ mongoose.connection.once('open', function(callback) {
 });
 
 // ======== DB Models ===================
+var Skill = require('./models/skills');
 var Word = require('./models/wordContent');
 var Phrase = require('./models/phraseContent');
+var SkillInfo = require('./models/skillInfoContent');
 var User = require('./models/users');
 
 // ======== Routes! =====================
 var indexRoute = require('./routes/index');
 var checkRoute = require('./routes/check');
 var usersRoute = require('./routes/users');
-var contentRoute = require('./routes/content');
+var skillsRoute = require('./routes/skills');
 var authRoute = require('./routes/authentication');
 
 if (config.apiURL){
   app.use('/api/check', checkRoute);
   app.use('/api/users', usersRoute);
-  app.use('/api/content', contentRoute);
+  app.use('/api/skills', skillsRoute);
   app.use('/', indexRoute);
 } else {
   app.use('/check', checkRoute);
   app.use('/users', usersRoute);
-  app.use('/content', contentRoute);
+  app.use('/skills', skillsRoute);
   app.use('/', indexRoute);
 }
 
@@ -79,7 +81,11 @@ app.use(function(err, req, res, next) {
 
 // ======== App Start! ===================
 app.listen(port);
-console.log('learnLX initiated at: '+ config.basesite +':' + port);
+if (config.apiURL) {
+  console.log('learnLX initiated at: '+ config.basesite +':' + port + '/api/');
+} else {
+  console.log('learnLX initiated at: '+ config.basesite +':' + port);
+}
 
 // ======== App End ========================
 process.on('SIGINT', function() {
