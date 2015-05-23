@@ -28,7 +28,11 @@ router.post('/auth/register',
 
 // ======== Other Pages ================
 router.get('/', function(req, res, next) {
-  res.sendFile('./html/index.html');
+  res.sendFile('index.html', { root: __dirname + '/../html/' });
+});
+
+router.get('/help', function(req, res, next) {
+  res.sendFile('api.html', { root: __dirname + '/../html/' });
 });
 
 router.get('/brew/:index', function(req, res, next) {

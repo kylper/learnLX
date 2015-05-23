@@ -3,11 +3,6 @@ var mongoose = require('mongoose');
 var router = express.Router();
 var word = require('../../models/wordContent');
 
-router.get('/', function(req, res, next){
-  res.status(404);
-  res.json({ message: 'Please specify the content you want to see.' });
-});
-
 /* Words */
 router.get('/words/:id', function(req, res, next) {
   word.findOne({ _id: req.params.id }, function(err, theWord){

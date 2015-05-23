@@ -4,7 +4,8 @@ var Schema = mongoose.Schema;
 var skillSchema = new Schema({
   id: Number,
   words: [String],
-  phrases: [String]
+  phrases: [String],
+  info: [String]
 });
 
 var Skill = mongoose.model('Skill', skillSchema);
