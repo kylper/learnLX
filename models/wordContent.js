@@ -4,6 +4,7 @@ var Schema = mongoose.Schema;
 var wordSchema = new Schema({
   native: String,
   translation: String,
+  ipa: String,
   image: { type: String },
   audio: { type: String },
   video: { type: String }

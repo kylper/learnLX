@@ -28,7 +28,7 @@ mongoose.connection.once('open', function(callback) {
 var Skill = require('./models/skills');
 var Word = require('./models/wordContent');
 var Phrase = require('./models/phraseContent');
-var SkillInfo = require('./models/skillInfoContent');
+var Lesson = require('./models/lessonContent');
 var User = require('./models/users');
 
 // ======== Routes! =====================

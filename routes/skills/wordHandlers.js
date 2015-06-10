@@ -52,11 +52,12 @@ router.post('/words', function(req, res, next) {
     console.log( "Current Count of Words in DB: ", count );
 
     newWordContent = {
-      "native": pd.native,
-      "translation": pd.translation,
-      "image": pd.image,
-      "audio": pd.audio,
-      "video": pd.video
+      "native" : pd.native,
+      "translation" : pd.translation,
+      "ipa" : pd.ipa,
+      "image" : pd.image,
+      "audio" : pd.audio,
+      "video" : pd.video
     }
 
     if (!pd.native || !pd.translation){
@@ -84,13 +85,52 @@ router.post('/words', function(req, res, next) {
 
 // Requires authentication
 router.put('/words/:id', function(req, res, next) {
-  res.status(501);
-  res.json({ message: "Function under development." });
-  // Checks proper authentication of level 2
-  // Checks content to see what is being updated (audio field, video field, content field, etc.)
-  // Verifies validity to match schema
-  // if verified, Updates code and pushes new content back to mongodb
-  // if unverified, return an error code (Invalid field).
+  var pd = req.body;
+  word.findOne({ _id: req.params.id }, function(err, theWord){
+    if (theWord == null){
+      res.status(404);
+      res.json ({ "message": "The word could not be found." });
+    } else if (theWord.native != undefined){
+      res.status(400);
+      res.json ({ "message": "You are not allowed to change this value. Please delete the word and add it again." });
+    } else if (!err){
+      console.log(theWord);
+      var currents = [ theWord.translation, theWord.ipa, theWord.image, theWord.audio, theWord.video ];
+      var userValues = [ pd.translation, pd.ipa, pd.image, pd.audio, pd.video ];
+      var updates = [];
+
+      for (var x=0; x > 5; x++){
+        if ((userValues[x] != undefined) && currents){
+          updates[x] = currents[x];
+        } else if (userValues[x]){
+          updates[x] = userValues[x];
+        } else {
+          updates[x] = null;
+        }
+      }
+
+      theWord.translation = updates[0];
+      theWord.ipa = updates[1];
+      theWord.image = updates[2];
+      theWord.audio = updates[3];
+      theWord.video = updates[4];
+
+      theWord.save(function (err) {
+        if (!err) {
+          res.status(200);
+          return res.json({ "message": "The updated word was saved successfully!" });
+        } else {
+          console.log(err);
+          res.status(500);
+          res.json ({ "message": err });
+        }
+      });
+
+    } else {
+      res.status(500);
+      res.json ({ "message": err });
+    }
+  });
 });
 
 // Requires authentication
