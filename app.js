@@ -38,15 +38,16 @@ var usersRoute = require('./routes/users');
 var skillsRoute = require('./routes/skills');
 var authRoute = require('./routes/authentication');
 
-if (config.apiURL){
-  app.use('/api/check', checkRoute);
-  app.use('/api/users', usersRoute);
-  app.use('/api/skills', skillsRoute);
-  app.use('/', indexRoute);
+if (config.apiOnly){
+  app.use('/v1/check', checkRoute);
+  app.use('/v1/users', usersRoute);
+  app.use('/v1/skills', skillsRoute);
+  app.use('/v1/auth', authRoute);
 } else {
-  app.use('/check', checkRoute);
-  app.use('/users', usersRoute);
-  app.use('/skills', skillsRoute);
+  app.use('/api/v1/check', checkRoute);
+  app.use('/api/v1/users', usersRoute);
+  app.use('/api/v1/skills', skillsRoute);
+  app.use('/api/v1/auth', authRoute);
   app.use('/', indexRoute);
 }
 

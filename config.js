@@ -3,7 +3,7 @@ module.exports = {
   'description': '',
   'languagecode': '',
   'basesite': 'api.learnlx.com',
-  'apiURL': false, // /api appended to all addresses
+  'apiOnly': false, // /api appended to all addresses
   'logging': 'dev', // default: combined, others: common, dev
   'port': '3000',
   'secret': 'learnLX',
