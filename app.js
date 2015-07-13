@@ -17,7 +17,7 @@ app.set('appSecret', config.secret);
 app.use(morgan(config.logging));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static('html'));
+// app.use(express.static('html'));
 
 mongoose.connection.on('error', console.error.bind(console, 'Connection Error with Mongoose. '));
 mongoose.connection.once('open', function(callback) {
@@ -25,31 +25,24 @@ mongoose.connection.once('open', function(callback) {
 });
 
 // ======== DB Models ===================
-var Skill = require('./models/skills');
-var Word = require('./models/wordContent');
-var Phrase = require('./models/phraseContent');
-var Lesson = require('./models/lessonContent');
 var User = require('./models/users');
+/* var Course = require('./models/courses'); */
 
 // ======== Routes! =====================
-var indexRoute = require('./routes/index');
-var checkRoute = require('./routes/check');
-var usersRoute = require('./routes/users');
-var skillsRoute = require('./routes/skills');
+var courseRoute = require('./routes/courses');
+var userRoute = require('./routes/users');
 var authRoute = require('./routes/authentication');
 
-if (config.apiOnly){
-  app.use('/v1/check', checkRoute);
-  app.use('/v1/users', usersRoute);
-  app.use('/v1/skills', skillsRoute);
-  app.use('/v1/auth', authRoute);
-} else {
-  app.use('/api/v1/check', checkRoute);
-  app.use('/api/v1/users', usersRoute);
-  app.use('/api/v1/skills', skillsRoute);
-  app.use('/api/v1/auth', authRoute);
-  app.use('/', indexRoute);
+if (!config.apiOnly) {
+  var webInterfaceRoutes = require('./routes/webInterface');
+  app.use(express.static(__dirname + '/public'));
+  app.use('/', webInterfaceRoutes);
 }
+
+app.use('/api/v1/auth', authRoute);
+app.use('/api/v1/users', userRoute);
+app.use('/api/v1/courses', courseRoute);
+  // app.use();
 
 // ======== Authentication ===============
 passport.use(new LocalStrategy(User.authenticate()));
@@ -82,11 +75,7 @@ app.use(function(err, req, res, next) {
 
 // ======== App Start! ===================
 app.listen(port);
-if (config.apiURL) {
-  console.log('learnLX initiated at: '+ config.basesite +':' + port + '/api/');
-} else {
-  console.log('learnLX initiated at: '+ config.basesite +':' + port);
-}
+console.log('learnLX initiated at: '+ config.basesite +':' + port);
 
 // ======== App End ========================
 process.on('SIGINT', function() {
