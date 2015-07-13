@@ -1,5 +1,5 @@
-learnLX - An open-source language learning platform.
-Copyright (C) 2015 Kyle Permuy
+learnLX
+Copyright (C) 2015 Kyle Permuy (www.varninja.com)
 
 GNU GENERAL PUBLIC LICENSE
     Version 3, 29 June 2007
