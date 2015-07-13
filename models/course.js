@@ -1,11 +1,18 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var skillSchema = new Schema({
+var lessonSchema = new Schema({
+
+});
+
+var unitSchema = new Schema({
+
+});
+
+var courseSchema = new Schema({
   id: Number,
-  words: [String],
-  phrases: [String],
-  info: [String]
+  
+
 });
 
 var Skill = mongoose.model('Skill', skillSchema);
