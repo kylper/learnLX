@@ -1,4 +1,4 @@
-![learnLX](http://learnlx.com/img/logo.png)
+![learnLX](http://learnlx.com/img/logo-black-sm.png)
 
 ## Description
 learnLX is an open source platform for learning programming languages.
