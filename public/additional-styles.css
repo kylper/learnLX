@@ -1,0 +1,35 @@
+@import url(http://fonts.googleapis.com/css?family=Lato:400,300,700);
+
+body {
+  font-family: 'Lato', sans-serif !important;
+}
+
+#regular-topbar {
+  background-color: #73E1EF;
+  height: 50px;
+}
+
+#topbar-logo {
+  width: auto;
+  height: 50px;
+  padding: 5px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+.topbar-options {
+  padding: 10px;
+  font-size: 1.2em;
+  float: right;
+  color: #003D40;
+}
+.topbar-options:hover {
+  color: #203F40;
+}
+
+@media (max-width: 600px){
+  #jumbotron-logo {
+    width: 100%;
+  }
+}
