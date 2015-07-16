@@ -1,33 +1,33 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var evalSchema = new Schema({
+var evalData = {
   exists: Boolean,
   fileLocation: String,
   assetsLocation: String
-});
+};
 
 var lessonSchema = new Schema({
   id: Schema.Types.ObjectId,
   name: String,
-  content: String, // This will be a markdown document in the form of a link learnlx.com/public/course-assets/coursename-unitid-lessonid
+  content: String
 });
 
 var unitSchema = new Schema({
   id: Schema.Types.ObjectId,
   name: String,
   description: String,
-  lessons: [ lessonSchema ],
-  eval: evalSchema
+  lessons: [ Schema.Types.ObjectId ],
+  eval: evalData
 });
 
 var courseSchema = new Schema({
   id: Schema.Types.ObjectId,
   name: String,
   description: String,
-  languages: String,
-  platforms: String,
-  units: [ unitSchema ],
+  languages: [ String ],
+  platforms: [ String ],
+  units: [ Schema.Types.ObjectId ],
   studentCount: Number
 });
 

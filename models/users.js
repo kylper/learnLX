@@ -3,13 +3,12 @@ var Schema = mongoose.Schema;
 var passportLocalMongoose = require('passport-local-mongoose');
 
 var userSchema = new Schema({
-  id: Number,
+  id: Schema.Types.ObjectId,
   name: String,
   email: String,
-  admin: Boolean,
-  moderator: Boolean,
-  languages: [ Number ],
-  created: { type: Date, default: Date.now },
+  role: String,
+  languages: [ String ],
+  created: { type: Date, default: Date.now }
 });
 
 userSchema.plugin(passportLocalMongoose);
