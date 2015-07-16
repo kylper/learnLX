@@ -33,6 +33,8 @@ var courseRoute = require('./routes/courses');
 var userRoute = require('./routes/users');
 var authRoute = require('./routes/authentication');
 
+app.use(express.static(__dirname + '/courses'));
+
 if (!config.apiOnly) {
   var webInterfaceRoutes = require('./routes/webInterface');
   app.use(express.static(__dirname + '/public'));
@@ -75,7 +77,7 @@ app.use(function(err, req, res, next) {
 
 // ======== App Start! ===================
 app.listen(port);
-console.log('learnLX initiated at: '+ config.basesite +':' + port);
+console.log('learnLX initiated at: '+ 'localhost' +':' + port);
 
 // ======== App End ========================
 process.on('SIGINT', function() {
