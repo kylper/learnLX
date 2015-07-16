@@ -2,6 +2,8 @@ var express = require('express');
 var passport = require('passport');
 var router = express.Router();
 
+var Course = require('../models/course.js');
+
 /* Course Lesson Details */
 router.get('/id/:uuid/:unit/:lesson', function(req, res, next) {
   res.status(501);
@@ -70,6 +72,14 @@ router.get('/list', function(req, res, next) {
       "active_users": "1201"
     }
   ]);
+});
+
+router.post('/new', function(req, res, next) {
+  res.status(501);
+  res.json({
+      "message": "Function under development.",
+      "resource": "/new "
+    });
 });
 
 /* router.get('/', function(req, res, next) {
